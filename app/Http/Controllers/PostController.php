@@ -13,7 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        $posts = [
+            ['id' => 1, 'title' => 'first post', 'posted by' => 'Osama' , 'created at' => '7/7/2024'],
+            ['id' => 2, 'title' => 'second post', 'posted by' => 'Roma' , 'created at' => '8/10/2024'],
+            ['id' => 3, 'title' => 'third post', 'posted by' => 'Aya' , 'created at' => '710/5/2024']
+        ];
+        return view('posts.index',compact('posts'));
     }
 
     /**
@@ -23,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
