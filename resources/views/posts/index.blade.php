@@ -19,14 +19,19 @@
         <tbody>
             @foreach($posts as $post)
                 <tr>
-                    <th scope="row">{{$post['id']}}</th>
-                    <td>{{$post['title']}}</td>
-                    <td>{{$post['posted by']}}</td>
-                    <td>{{$post['created at']}}</td>
+                    <th scope="row">{{$post->id}}</th>
+                    <td>{{$post->title}}</td>
+                    <td>{{$post->user->name}}</td>
+                    <td>{{$post->created_at->format("Y-m-d")}}</td>
+
                     <td>
-                        <a class="btn btn-info" href="{{route('posts.show',$post['id'])}}">View</a>
-                        <a class="btn btn-primary">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <a class="btn btn-info" href="{{route('posts.show',$post->id)}}">View</a>
+                        <a class="btn btn-primary" href="{{route('posts.edit',$post->id)}}">Edit</a>
+                        <form method="post" action="{{route('posts.destroy',$post->id)}}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger"onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
