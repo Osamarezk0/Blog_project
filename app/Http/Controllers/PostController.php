@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,12 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = [
-            ['id' => 1, 'title' => 'first post', 'posted by' => 'Osama' , 'created at' => '7/7/2024'],
-            ['id' => 2, 'title' => 'second post', 'posted by' => 'Roma' , 'created at' => '8/10/2024'],
-            ['id' => 3, 'title' => 'third post', 'posted by' => 'Aya' , 'created at' => '710/5/2024']
-        ];
-        return view('posts.index',compact('posts'));
+     $posts = Post::all();
+     return view('posts.index', compact('posts'));
+
     }
 
     /**
@@ -39,6 +37,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id
+        ]);
         return redirect()->route('posts.index');
     }
 
@@ -48,10 +51,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($post)
     {
-        $id = $id;
-        return view('posts.show',compact('id'));
+        $post = Post::findorfail($post);
+        return view('posts.show',compact('post'));
     }
 
     /**

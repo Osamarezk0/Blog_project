@@ -7,8 +7,9 @@
            Post Details
         </div>
         <div class="card-body">
-            <h5 class="card-title"> title </h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title"> {{$post->title}} </h5>
+            <p class="card-text">{{$post->description}}</p>
+            <h3>{{$post->user->name}}</h3>
         </div>
     </div>
 @endsection

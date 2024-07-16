@@ -13,8 +13,8 @@
     <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
 </div>
 <div class="mb-3">
-    <label for="post creator" class="form-label">Post Creator</label>
-    <input type="text" class="form-control" name="post creator" id="title" placeholder="post creator">
+    <label for="user_id" class="form-label">Post Creator</label>
+    <input type="number" class="form-control" name="user_id" id="title" placeholder="post creator">
 </div>
 
 <div >

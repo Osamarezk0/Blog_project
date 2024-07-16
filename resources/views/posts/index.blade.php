@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <table class="table">
+    <table class="mx-auto table">
         <thead>
         <tr>
             <th scope="col">Id</th>
