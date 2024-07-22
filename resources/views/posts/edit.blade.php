@@ -2,10 +2,16 @@
 @section('content')
 
 
-    <form method="post" action="{{route('posts.update',$post->id)}}">
+    <form method="post" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-<div class="mb-3">
+        <div class="mb-3">
+            @if($post->image)
+                <img src="{{asset('storage/' . $post->image)}}" width="100">
+            @endif
+        </div>
+
+        <div class="mb-3">
     <label for="title" class="form-label">Title</label>
     <input type="text" name="title" class="form-control" id="title" value="{{$post->title}}">
 </div>
@@ -23,6 +29,10 @@
 
     </select>
 </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" name="image" class="form-control" id="image" placeholder="image">
+        </div>
 
 <div >
     <button type="submit" class="btn btn-primary">Update</button>

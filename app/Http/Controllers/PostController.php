@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Http\Traits\ImageTrait;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    use ImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-     $posts = Post::paginate(2);
+
+     $posts = Post::paginate(5);
 
      return view('posts.index', compact('posts'));
 
@@ -41,12 +44,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
+       $path = $this->uploadImage($request->file('image') , 'images');
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
+            'image' => $path
         ]);
+
         return redirect()->route('posts.index');
     }
 
@@ -85,10 +90,12 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
+        $path = $this->uploadImage($request->file('image') , 'images', $post->image);
         $post->update([
             'title' => $request->title,
             'description' => $request->description,
-           'user_id' => $request->user_id
+           'user_id' => $request->user_id,
+            'image' => $path
         ]);
         return redirect()->route('posts.index');
     }

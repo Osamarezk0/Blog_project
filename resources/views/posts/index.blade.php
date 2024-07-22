@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th scope="col">Id</th>
+            <th scope="col">Image</th>
             <th scope="col">title</th>
             <th scope="col">Posted By</th>
             <th scope="col">Created At</th>
@@ -20,6 +21,11 @@
             @foreach($posts as $post)
                 <tr>
                     <th scope="row">{{$post->id}}</th>
+                    <td>
+                        @if($post->image)
+                        <img src="{{asset('storage/' . $post->image)}}" width="100">
+                        @endif
+                    </td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->user->name}}</td>
                     <td>{{$post->created_at->format("Y-m-d")}}</td>
