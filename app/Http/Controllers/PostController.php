@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Traits\ImageTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -18,8 +21,15 @@ class PostController extends Controller
      */
     public function index()
     {
+        $request = request();
+        $query = Post::query();
 
-     $posts = Post::paginate(5);
+    if ($name = $request->query('title')) {
+        $query->where('title', 'LIKE', "%{$name}%");
+    }
+
+     $posts = $query->paginate(1);
+
 
      return view('posts.index', compact('posts'));
 
@@ -42,7 +52,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
        $path = $this->uploadImage($request->file('image') , 'images');
         Post::create([
@@ -87,15 +97,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id)
     {
         $post = Post::find($id);
-        $path = $this->uploadImage($request->file('image') , 'images', $post->image);
+        if ($request->hasFile('image')) {
+            $path = $this->uploadImage($request->file('image') , 'images', $post->image);
+        }
         $post->update([
             'title' => $request->title,
             'description' => $request->description,
            'user_id' => $request->user_id,
-            'image' => $path
+            'image' => (isset($path)) ? $path : $post->image
         ]);
         return redirect()->route('posts.index');
     }
@@ -110,6 +122,9 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
+        if($post->image){
+            Storage::disk('public')->delete($post->image);
+        }
         return redirect()->route('posts.index');
     }
 }

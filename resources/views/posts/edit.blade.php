@@ -5,6 +5,9 @@
     <form method="post" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
+
+       <input type="hidden" name="id" value="{{$post->id}}">
+
         <div class="mb-3">
             @if($post->image)
                 <img src="{{asset('storage/' . $post->image)}}" width="100">
@@ -12,8 +15,7 @@
         </div>
 
         <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" name="title" class="form-control" id="title" value="{{$post->title}}">
+            <x-forms.input type='text' name='title' value="{{$post->title}}" lable="Title" />
 </div>
 <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">Description</label>
@@ -30,8 +32,7 @@
     </select>
 </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="file" name="image" class="form-control" id="image" placeholder="image">
+            <x-forms.input type='file' name="image" lable="Image" />
         </div>
 
 <div >

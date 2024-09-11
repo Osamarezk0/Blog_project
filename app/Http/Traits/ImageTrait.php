@@ -10,7 +10,6 @@ Trait ImageTrait{
         if($old_file){
             Storage::disk('public')->delete($old_file);
         }
-
        $path_image = $file->store($path,[
            'disk' => 'public'
        ]);

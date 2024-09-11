@@ -7,6 +7,12 @@
            Post Details
         </div>
         <div class="card-body">
+            <h3 class="card-title">Description:-</h3>
+            <p class="card-text">
+                @if($post->image)
+                    <img src="{{asset('storage/' . $post->image)}}" width="200">
+                @endif
+            </p>
             <h3 class="card-title">Title:-</h3>
             <p class="card-text"> {{$post->title}} </p>
             <h3 class="card-title">Description:-</h3>

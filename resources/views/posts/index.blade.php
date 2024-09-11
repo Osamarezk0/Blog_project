@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
+        <x-forms.input :value="request('title')" name="title" type="text" class="mx-2"/>
+        <button class="btn btn-dark mx-2">Filter</button>
+    </form>
     <table class="mx-auto table">
         <thead>
         <tr>
@@ -46,16 +50,7 @@
         </tbody>
     </table>
 
-    {{$posts->links()}}
+    {{$posts->withQueryString()->links()}}
 
-{{--    <nav aria-label="Page navigation example">--}}
-{{--        <ul class="pagination">--}}
-{{--            <li class="page-item"><a class="page-link" href="{{$posts->links()}}">Previous</a></li>--}}
-{{--            <li class="page-item"><a class="page-link" href="{{$posts->links()}}">1</a></li>--}}
-{{--            <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-{{--            <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--            <li class="page-item"><a class="page-link" href="#">Next</a></li>--}}
-{{--        </ul>--}}
-{{--    </nav>--}}
 
 @endsection
